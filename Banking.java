@@ -101,12 +101,8 @@ public class Banking{
         
 
 
-
-
         // ideas: add something for when user/password is incorrect and maybe add limited attempts to login like 5 and then they have to wait to try again
 
-
-    
 
         
 
