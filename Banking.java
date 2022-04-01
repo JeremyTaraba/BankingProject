@@ -2,6 +2,18 @@ import java.io.File;
 import java.util.*;
 
 public class Banking{
+    private boolean accountActive;//you can't change this outside of this file
+    private String name;
+    private int ID; //set these to private, so nothing can mess it up
+    private int accountBalance;
+
+    public Banking(boolean status, String username, int id, int balance) //only construcotrs and setter methods can change these variables
+    {
+        this.accountActive = status;
+        this.name = username;
+        this.ID = id;
+        this.accountBalance = balance;
+    }
 
 
     public static String login(Hashtable<String, String> logins, Scanner input){
@@ -73,7 +85,7 @@ public class Banking{
 
 
     public static void main(String args[]) throws Exception { 
-        File file = new File("C:\\Users\\jghos\\OneDrive\\Documents\\Code\\Java\\login.txt");
+        File file = new File("C:\\Users\\jghos\\Documents\\GitHub\\BankingProject\\login.txt");
         Scanner sc = new Scanner(file);
         Scanner input = new Scanner(System.in);
         String username = "";
@@ -90,6 +102,40 @@ public class Banking{
 
         if(startChoice == 1){
             username = login(logins, input);
+
+            Boolean accountStatus = false;
+            String accountName = "";
+            int accountID = -1;
+            int accountBalance = -1;
+
+            File accountFile = new File("C:\\Users\\jghos\\Documents\\GitHub\\BankingProject\\account_details\\" + username + ".txt");
+            Scanner scAccount = new Scanner(accountFile);
+            if(scAccount.hasNextLine()){    
+                if(scAccount.nextLine().equals("true")){
+                    accountStatus = true;
+                }
+                if(scAccount.hasNextLine()){
+                    accountName = scAccount.nextLine();
+                }
+                if(scAccount.hasNextLine()){
+                    accountID = Integer.parseInt(scAccount.nextLine());
+                }
+                if(scAccount.hasNextLine()){
+                    accountBalance = Integer.parseInt(scAccount.nextLine());
+                }
+            }
+            Banking user1 = new Banking(accountStatus, accountName, accountID, accountBalance);
+            
+            //check if account is active or not and if not do something
+
+
+
+            scAccount.close();
+            System.out.println("Hello, " + user1.name + " What would you like to do today? 1. Check Balance 2. Deposit Money 3. Withdrawal 4. Logout");
+
+
+
+
         }
         else if(startChoice == 2){
             createAccount();
