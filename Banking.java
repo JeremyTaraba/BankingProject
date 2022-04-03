@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.*;
+import java.io.FileWriter;
 
 public class Banking{
     private boolean accountActive;//you can't change this outside of this file
@@ -34,7 +35,7 @@ public class Banking{
             {
                 if (logins.get(user).equals(pass))
                 {
-                    System.out.println("login succesful");
+                    System.out.println("login succesful\n");
                     failLogin = false;
                 }
                 else
@@ -83,6 +84,17 @@ public class Banking{
         return 0;
     }
 
+    public int getBalance(){
+        return this.accountBalance;
+    }
+
+    public void deposit(int depositAmount){
+        
+    }
+
+    public void withdrawal(){
+        
+    }
 
     public static void main(String args[]) throws Exception { 
         File file = new File("C:\\Users\\jghos\\Documents\\GitHub\\BankingProject\\login.txt");
@@ -129,12 +141,39 @@ public class Banking{
             
             //check if account is active or not and if not do something
             if(user1.accountActive != true){
-                System.out.println("This account is Inactive. Call our number for help in activating your account");
+                System.out.println("ERROR: This account is Inactive. Call our number for help in activating your account");
             }
             else{
-                System.out.println("Hello, " + user1.name + " What would you like to do today? 1. Check Balance 2. Deposit Money 3. Withdrawal 4. Logout");
+                System.out.println("Hello, " + user1.name + " What would you like to do today? 1. Check Balance 2. Deposit 3. Withdrawal 4. Logout");
+                String loginChoice = "";
+                boolean loginChoiceBool = true;
 
-                
+                while(loginChoiceBool){
+                    
+                    loginChoice = input.nextLine();
+                    if(loginChoice.equals("1")){
+                        System.out.println("Your current balance is: " + user1.getBalance() + "\n");
+                    }
+                    else if(loginChoice.equals("2")){
+                        System.out.println("How much would you like to deposit?");
+                        int depositAmount = Integer.parseInt(input.nextLine());
+                        user1.deposit(depositAmount);
+                        System.out.println("Successfully depositted. Your new balance is: " + user1.getBalance() + "\n");
+                    }
+                    else if(loginChoice.equals("3")){
+                        user1.withdrawal();
+                    }
+                    else if(loginChoice.equals("4")){
+                        System.out.println("Logout Successful");
+                        loginChoiceBool = false;    //doesn't do anything since we break out of the loop
+                        break;
+                    }
+                    else{
+                        System.out.println("Invalid choice. Choose again");
+                    }
+                    System.out.println("1. Check Balance 2. Deposit Money 3. Withdrawal 4. Logout");
+
+                }
             }
       
             
