@@ -125,13 +125,19 @@ public class Banking{
                 }
             }
             Banking user1 = new Banking(accountStatus, accountName, accountID, accountBalance);
+            scAccount.close();
             
             //check if account is active or not and if not do something
+            if(user1.accountActive != true){
+                System.out.println("This account is Inactive. Call our number for help in activating your account");
+            }
+            else{
+                System.out.println("Hello, " + user1.name + " What would you like to do today? 1. Check Balance 2. Deposit Money 3. Withdrawal 4. Logout");
 
-
-
-            scAccount.close();
-            System.out.println("Hello, " + user1.name + " What would you like to do today? 1. Check Balance 2. Deposit Money 3. Withdrawal 4. Logout");
+                
+            }
+      
+            
 
 
 
