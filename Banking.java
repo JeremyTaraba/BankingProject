@@ -126,7 +126,7 @@ public class Banking{
  
         if(startChoice == 1){
             username = login(logins, input); 
-
+ 
             Boolean accountStatus = false;
             String accountName = "";
             int accountBalance = -1;
@@ -136,7 +136,7 @@ public class Banking{
             if(scAccount.hasNextLine()){    
                 if(scAccount.nextLine().equals("true")){
                     accountStatus = true;
-                }
+                } 
                 if(scAccount.hasNextLine()){
                     accountName = scAccount.nextLine();
                 }
