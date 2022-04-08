@@ -53,8 +53,57 @@ public class Banking{
        return user;
     }
 
-    public static void createAccount(){
-        //should put login stuff in its own function. so can loop over it easy if incorrect username/password
+    public static void createAccount(Scanner input, Hashtable<String, String> logins){
+        System.out.println("Welcome, please enter your new username: \n");
+        String username = "";
+        boolean usernameExists = true;
+
+        while(usernameExists){
+            usernameExists = false;
+            username = input.nextLine();
+            if(logins.containsKey(username)){   //hashtables: <key> : <value>    -->  <username> : <password>
+                usernameExists = true;
+                System.out.println("Username is already taken, please choose another");
+            }
+        }
+
+        String password = "";
+        String password2 = "";
+        boolean passwordMatch = false;
+
+        while(!passwordMatch){
+            System.out.println("Please enter your new password: \n");
+            password = input.nextLine();
+            System.out.println("Re-enter your password: \n");
+            password2 = input.nextLine();
+            if(password.equals(password2)){
+                System.out.println("Congratulations your account has been created");
+                passwordMatch = true;
+            }
+            else{
+                System.out.println("Error. Passwords do not match. Please enter them again");
+            }
+        }
+
+        System.out.println("What do you want your display name to be?");
+        String name = input.nextLine();
+
+
+        try{
+            FileWriter myWriter = new FileWriter("C:\\Users\\jghos\\Documents\\GitHub\\BankingProject\\login.txt", true);
+            myWriter.write("\n" + username + "\n" + password);
+            myWriter.close();
+
+            FileWriter myWriter2 = new FileWriter("C:\\Users\\jghos\\Documents\\GitHub\\BankingProject\\account_details\\" + username + ".txt");
+            myWriter2.write("true\n" + name + "\n0");
+            myWriter2.close();
+        }
+        catch(IOException e){
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        
+
     }
 
     public static int start(Scanner input){
@@ -96,7 +145,7 @@ public class Banking{
             myWriter.write(this.accountActive + "\n" + this.name + "\n" + total);
             this.accountBalance = total;
             myWriter.close();
-
+            System.out.println("Successfully depositted. Your new balance is: " + this.getBalance() + "\n");
         }
         catch(IOException e){
             System.out.println("An error occurred.");
@@ -104,8 +153,23 @@ public class Banking{
         }
     }
 
-    public void withdrawal(){
-        
+    public void withdrawal(int withdrawalAmount){
+        int total = this.accountBalance - withdrawalAmount;
+        if(total < 0){
+            System.out.println("Error. Cannot withdrawal more than your current balance\n");
+            return;
+        }
+        try{
+            FileWriter myWriter = new FileWriter("C:\\Users\\jghos\\Documents\\GitHub\\BankingProject\\account_details\\" + this.ID + ".txt");
+            myWriter.write(this.accountActive + "\n" + this.name + "\n" + total);
+            this.accountBalance = total;
+            myWriter.close();
+            System.out.println("Successfully withdrew. Your new balance is: " + this.getBalance() + "\n");
+        }
+        catch(IOException e){
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 
     public static void main(String args[]) throws Exception { 
@@ -166,10 +230,13 @@ public class Banking{
                         System.out.println("How much would you like to deposit?");
                         int depositAmount = Integer.parseInt(input.nextLine());
                         user1.deposit(depositAmount);
-                        System.out.println("Successfully depositted. Your new balance is: " + user1.getBalance() + "\n");
+                        
                     }
                     else if(loginChoice.equals("3")){
-                        user1.withdrawal();
+                        System.out.println("How much would you like to withdrawal?");
+                        int withdrawalAmount = Integer.parseInt(input.nextLine());
+                        user1.withdrawal(withdrawalAmount);
+                        
                     }
                     else if(loginChoice.equals("4")){
                         System.out.println("Logout Successful");
@@ -183,15 +250,11 @@ public class Banking{
 
                 }
             }
-      
-            
-
-
 
 
         }
         else if(startChoice == 2){
-            createAccount();
+            createAccount(input, logins);
         }
         else{
             //pass
@@ -200,8 +263,7 @@ public class Banking{
         
 
 
-        // ideas: add something for when user/password is incorrect and maybe add limited attempts to login like 5 and then they have to wait to try again
-
+       
 
         
 
