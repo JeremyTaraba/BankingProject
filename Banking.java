@@ -190,7 +190,9 @@ public class Banking{
  
         if(startChoice == 1){
             username = login(logins, input); 
- 
+
+
+            //everything under here should be in a function.
             Boolean accountStatus = false;
             String accountName = "";
             int accountBalance = -1;
