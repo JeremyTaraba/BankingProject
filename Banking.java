@@ -134,7 +134,7 @@ public class Banking{
 
         for(int i = 0; i < 5; i++){ //for loop is used to initilize the arraylist to size 5
             captcha.add('a');
-        }
+        } 
 
         while(!captchaSuccess){
             for(int i = 0; i < 5; i++){ //used to randomize the captcha every time
