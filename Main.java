@@ -6,6 +6,7 @@ import java.util.*;
 // need to add checker for if you input balance that has strings
 // need to add checker for if you input strings instead of integers
 // now can start adding GUI stuff into it
+// Change methods to static for ones that don't need the objects
 
 public class Main{
 
