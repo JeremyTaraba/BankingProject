@@ -1,7 +1,7 @@
 import java.io.File;
 import java.util.*;
 
-
+//look up big decimal on gfg
 // need to add decimals to the balance, rounded to hundredths place. need to add checker incase of strings in balance
 // need to add checker for if you input balance that has strings
 // need to add checker for if you input strings instead of integers

@@ -7,7 +7,7 @@ public class Banking{
     private boolean accountActive;//you can't change this outside of this file
     private String name;
     private String ID; //set these to private, so nothing can mess it up
-    private int accountBalance;
+    private float accountBalance;
 
     public Banking(){
         this.accountActive = false;;
