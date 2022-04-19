@@ -2,6 +2,7 @@ import java.io.File;
 import java.util.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 
 public class Login{
@@ -164,7 +165,7 @@ public class Login{
     public Banking loginSuccess(Scanner input, String username){
         Boolean accountStatus = false;
         String accountName = "";
-        int accountBalance = -1;
+        BigDecimal accountBalance = BigDecimal.valueOf(-1.00);
         
         try{
             File accountFile = new File("C:\\Users\\jghos\\Documents\\GitHub\\BankingProject\\account_details\\" + username + ".txt");
@@ -177,7 +178,7 @@ public class Login{
                     accountName = scAccount.nextLine();
                 }
                 if(scAccount.hasNextLine()){
-                    accountBalance = Integer.parseInt(scAccount.nextLine());
+                    accountBalance = BigDecimal.valueOf(Double.valueOf(scAccount.nextLine()));
                 }
             }  
             scAccount.close();

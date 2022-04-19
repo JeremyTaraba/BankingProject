@@ -1,12 +1,13 @@
 import java.io.File;
 import java.util.*;
 
-//look up big decimal on gfg
-// need to add decimals to the balance, rounded to hundredths place. need to add checker incase of strings in balance
+//look up big decimal on gfg    done
+// check if they input more than two decimals   done
 // need to add checker for if you input balance that has strings
-// need to add checker for if you input strings instead of integers
-// now can start adding GUI stuff into it
+// need to add checker for if you input strings instead of integers for all int values
 // Change methods to static for ones that don't need the objects
+// now can start adding GUI stuff into it
+
 
 public class Main{
 

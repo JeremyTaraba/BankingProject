@@ -1,22 +1,23 @@
 import java.util.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
  
 
 public class Banking{
     private boolean accountActive;//you can't change this outside of this file
     private String name;
     private String ID; //set these to private, so nothing can mess it up
-    private float accountBalance;
+    private BigDecimal accountBalance;
 
     public Banking(){
         this.accountActive = false;;
         this.name = "";
         this.ID = "";
-        this.accountBalance = -1;
+        this.accountBalance = BigDecimal.valueOf(-1.00);
     }
 
-    public Banking(boolean status, String username, String id, int balance) //only construcotrs and setter methods can change these variables
+    public Banking(boolean status, String username, String id, BigDecimal balance) //only construcotrs and setter methods can change these variables
     {
         this.accountActive = status;
         this.name = username;
@@ -46,14 +47,25 @@ public class Banking{
                 }
                 else if(loginChoice.equals("2")){
                     System.out.println("How much would you like to deposit?");
-                    int depositAmount = Integer.parseInt(input.nextLine());
-                    this.deposit(depositAmount);
+                    BigDecimal depositAmount = BigDecimal.valueOf(Double.valueOf(input.nextLine()));
+                    if(depositAmount.scale() > 2){
+                        System.out.println("Please only input up to 2 decimal points");
+                    }
+                    else{
+                        this.deposit(depositAmount);
+                    }
+                    
                     
                 }
                 else if(loginChoice.equals("3")){
                     System.out.println("How much would you like to withdrawal?");
-                    int withdrawalAmount = Integer.parseInt(input.nextLine());
-                    this.withdrawal(withdrawalAmount);
+                    BigDecimal withdrawalAmount = BigDecimal.valueOf(Double.valueOf(input.nextLine()));
+                    if(withdrawalAmount.scale() > 2){
+                        System.out.println("Please only input up to 2 decimal points");
+                    }
+                    else{
+                        this.withdrawal(withdrawalAmount);
+                    }
                     
                 }
                 else if(loginChoice.equals("4")){
@@ -76,12 +88,12 @@ public class Banking{
 
     
 
-    public int getBalance(){
+    public BigDecimal getBalance(){
         return this.accountBalance;
     }
 
-    public void deposit(int depositAmount){
-        int total = this.accountBalance + depositAmount;
+    public void deposit(BigDecimal depositAmount){
+        BigDecimal total = this.accountBalance.add(depositAmount);
         try{
             FileWriter myWriter = new FileWriter("C:\\Users\\jghos\\Documents\\GitHub\\BankingProject\\account_details\\" + this.ID + ".txt");
             myWriter.write(this.accountActive + "\n" + this.name + "\n" + total);
@@ -95,9 +107,10 @@ public class Banking{
         }
     }
 
-    public void withdrawal(int withdrawalAmount){
-        int total = this.accountBalance - withdrawalAmount;
-        if(total < 0){
+    public void withdrawal(BigDecimal withdrawalAmount){
+        BigDecimal total = this.accountBalance.subtract(withdrawalAmount);
+        int result = total.compareTo(BigDecimal.valueOf(0.00));
+        if(result == -1 ){
             System.out.println("Error. Cannot withdrawal more than your current balance\n");
             System.out.println("Your current balance is: " + this.getBalance() + "\n");
             return;
