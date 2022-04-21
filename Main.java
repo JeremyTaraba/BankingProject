@@ -13,7 +13,7 @@ public class Main{
 
     public static void main(String args[]) throws Exception { 
         File file = new File("C:\\Users\\jghos\\Documents\\GitHub\\BankingProject\\login.txt");
-        Scanner sc = new Scanner(file);
+        Scanner sc = new Scanner(file); 
         Scanner input = new Scanner(System.in);
         String username = "";
         Login loginAttempt = new Login();
