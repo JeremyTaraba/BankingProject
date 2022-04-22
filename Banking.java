@@ -25,6 +25,16 @@ public class Banking{
         this.accountBalance = balance;
     }
 
+    private static boolean isNumber(String str){
+        try{
+            Double.parseDouble(str);
+            return true;
+        }
+        catch(NumberFormatException e){
+            return false;
+        }
+    }
+
 
    
 
@@ -32,7 +42,7 @@ public class Banking{
         
         //check if account is active or not and if not do something
         if(this.accountActive != true){
-            System.out.println("ERROR: This account is Inactive. Call our number for help in activating your account");
+            System.out.println("ERROR: This account is Inactive. Call our number for help with activating your account");
         }
         else{
             System.out.println("Hello, " + this.name + " What would you like to do today? 1. Check Balance 2. Deposit 3. Withdrawal 4. Logout");
@@ -47,25 +57,39 @@ public class Banking{
                 }
                 else if(loginChoice.equals("2")){
                     System.out.println("How much would you like to deposit?");
-                    BigDecimal depositAmount = BigDecimal.valueOf(Double.valueOf(input.nextLine()));
-                    if(depositAmount.scale() > 2){
-                        System.out.println("Please only input up to 2 decimal points");
+                    String depositStr = input.nextLine();
+                    if(isNumber(depositStr)){
+                        BigDecimal depositAmount = BigDecimal.valueOf(Double.valueOf(depositStr));
+                        if(depositAmount.scale() > 2){
+                            System.out.println("Please only input up to 2 decimal points");
+                        }
+                        else{
+                            this.deposit(depositAmount);
+                        }
                     }
                     else{
-                        this.deposit(depositAmount);
+                        System.out.println("Please enter a number");
                     }
                     
+                                        
                     
                 }
                 else if(loginChoice.equals("3")){
                     System.out.println("How much would you like to withdrawal?");
-                    BigDecimal withdrawalAmount = BigDecimal.valueOf(Double.valueOf(input.nextLine()));
-                    if(withdrawalAmount.scale() > 2){
-                        System.out.println("Please only input up to 2 decimal points");
+                    String withdrawalStr = input.nextLine();
+                    if(isNumber(withdrawalStr)){
+                        BigDecimal withdrawalAmount = BigDecimal.valueOf(Double.valueOf(withdrawalStr));
+                        if(withdrawalAmount.scale() > 2){
+                            System.out.println("Please only input up to 2 decimal points");
+                        }
+                        else{
+                            this.withdrawal(withdrawalAmount);
+                        }
                     }
                     else{
-                        this.withdrawal(withdrawalAmount);
+                        System.out.println("Please enter a number");
                     }
+                    
                     
                 }
                 else if(loginChoice.equals("4")){
@@ -92,7 +116,7 @@ public class Banking{
         return this.accountBalance;
     }
 
-    public void deposit(BigDecimal depositAmount){
+    private void deposit(BigDecimal depositAmount){
         BigDecimal total = this.accountBalance.add(depositAmount);
         try{
             FileWriter myWriter = new FileWriter("C:\\Users\\jghos\\Documents\\GitHub\\BankingProject\\account_details\\" + this.ID + ".txt");
@@ -102,12 +126,12 @@ public class Banking{
             System.out.println("Successfully depositted. Your new balance is: " + this.getBalance() + "\n");
         }
         catch(IOException e){
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred while depositting.");
             e.printStackTrace();
         }
     }
 
-    public void withdrawal(BigDecimal withdrawalAmount){
+    private void withdrawal(BigDecimal withdrawalAmount){
         BigDecimal total = this.accountBalance.subtract(withdrawalAmount);
         int result = total.compareTo(BigDecimal.valueOf(0.00));
         if(result == -1 ){
@@ -123,7 +147,7 @@ public class Banking{
             System.out.println("Successfully withdrew. Your new balance is: " + this.getBalance() + "\n");
         }
         catch(IOException e){
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred while withdrawaling.");
             e.printStackTrace();
         }
     }
