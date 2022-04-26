@@ -1,11 +1,7 @@
 import java.io.File;
 import java.util.*;
 
-//look up big decimal on gfg    done
-// check if they input more than two decimals   done
-// need to add checker for if you input balance that has strings   done
-// need to add checker for if you input strings instead of integers for all int values  done?
-// Change methods to static for ones that are called within their own file and don't need objects
+
 // now can start adding GUI stuff into it
 
 
